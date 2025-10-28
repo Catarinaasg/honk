@@ -3,7 +3,44 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, BellOff, Car, LogOut, Mail, Plus, Megaphone } from 'lucide-react';
 
-const appState = {
+interface User {
+  id: string;
+  email: string;
+  notificationsEnabled: boolean;
+  selectedSound?: string;
+  createdAt: Date;
+}
+
+interface Vehicle {
+  id: string;
+  userId: string;
+  plate: string;
+  createdAt: Date;
+}
+
+interface Honk {
+  id: string;
+  targetUserId: string;
+  targetPlate: string;
+  senderUserId: string;
+  createdAt: Date;
+  replied: boolean;
+  replyMessage?: string;
+  replyTime?: Date;
+}
+
+interface MagicLink {
+  token: string;
+  email: string;
+  createdAt: Date;
+}
+
+const appState: {
+  users: User[];
+  vehicles: Vehicle[];
+  honks: Honk[];
+  magicLinks: MagicLink[];
+} = {
   users: [],
   vehicles: [],
   honks: [],
@@ -13,16 +50,16 @@ const appState = {
 export default function Home() {
   const [currentView, setCurrentView] = useState('landing');
   const [activePage, setActivePage] = useState('honk');
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [email, setEmail] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [demoMagicLink, setDemoMagicLink] = useState('');
   const [searchPlate, setSearchPlate] = useState('');
   const [newPlate, setNewPlate] = useState('');
   const [isHonking, setIsHonking] = useState(false);
-  const [incomingHonks, setIncomingHonks] = useState([]);
+  const [incomingHonks, setIncomingHonks] = useState<Honk[]>([]);
   const [customMinutes, setCustomMinutes] = useState({});
-  const [userVehicles, setUserVehicles] = useState([]);
+  const [userVehicles, setUserVehicles] = useState<Vehicle[]>([]);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [selectedSound, setSelectedSound] = useState('classic');
   const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
