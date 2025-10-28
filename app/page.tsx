@@ -13,7 +13,7 @@ const appState = {
 export default function Home() {
   const [currentView, setCurrentView] = useState('landing');
   const [activePage, setActivePage] = useState('honk');
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [email, setEmail] = useState('');
   const [magicLinkSent, setMagicLinkSent] = useState(false);
   const [demoMagicLink, setDemoMagicLink] = useState('');
@@ -25,8 +25,8 @@ export default function Home() {
   const [userVehicles, setUserVehicles] = useState([]);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [selectedSound, setSelectedSound] = useState('classic');
-  const [audioElement, setAudioElement] = useState(null);
-  const [currentAudio, setCurrentAudio] = useState(null);
+  const [audioElement, setAudioElement] = useState<HTMLAudioElement | null>(null);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
 
   // Preload audio on component mount
   useEffect(() => {
