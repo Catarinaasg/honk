@@ -43,7 +43,7 @@ export default function Home() {
     { id: 'gentle', name: 'Ship Horn', emoji: '🚢', url: 'https://raw.githubusercontent.com/catarinaasg/honk/main/sounds/ship-horn.mp3' },
   ];
 
-  const formatPlate = (value) => {
+  const formatPlate = (value: string) => {
     const cleaned = value.replace(/[^A-Z0-9]/gi, '').toUpperCase();
     if (cleaned.length <= 2) {
       return cleaned;
@@ -54,7 +54,7 @@ export default function Home() {
     }
   };
 
-  const handlePlateInput = (value, setter) => {
+  const handlePlateInput = (value: string, setter: (value: string) => void) => {
     const formatted = formatPlate(value);
     setter(formatted);
   };
@@ -69,7 +69,7 @@ export default function Home() {
     }
   }, []);
 
-  const handleMagicLinkLogin = (token) => {
+  const handleMagicLinkLogin = (token: string) => {
     const linkData = appState.magicLinks.find(link => link.token === token);
     if (linkData) {
       const user = appState.users.find(u => u.email === linkData.email);
@@ -84,7 +84,7 @@ export default function Home() {
     }
   };
 
-  const loadUserData = (userId) => {
+  const loadUserData = (userId: string) => {
     const vehicles = appState.vehicles.filter(v => v.userId === userId);
     setUserVehicles(vehicles);
     const user = appState.users.find(u => u.id === userId);
@@ -97,7 +97,7 @@ export default function Home() {
     setIncomingHonks(receivedHonks);
   };
 
-  const sendMagicLink = (e) => {
+  const sendMagicLink = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
     if (!email || !email.includes('@')) {
@@ -182,7 +182,7 @@ export default function Home() {
     }
   };
 
-  const playSound = (soundId) => {
+  const playSound = (soundId: string) => {
     // Stop currently playing audio if any
     if (currentAudio) {
       currentAudio.pause();
@@ -218,7 +218,7 @@ export default function Home() {
     }
   };
 
-  const selectSound = (soundId) => {
+  const selectSound = (soundId: string) => {
     setSelectedSound(soundId);
     playSound(soundId);
     const user = appState.users.find(u => u.id === currentUser.id);
@@ -227,7 +227,7 @@ export default function Home() {
     }
   };
 
-  const sendQuickReply = (honkId, minutes, customMessage) => {
+  const sendQuickReply = (honkId: string, minutes?: number, customMessage?: string) => {
     const honk = appState.honks.find(h => h.id === honkId);
     if (honk) {
       honk.replied = true;
@@ -248,7 +248,7 @@ export default function Home() {
     }
   };
 
-  const searchAndHonk = (e) => {
+  const searchAndHonk = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
     const plate = searchPlate.trim();
